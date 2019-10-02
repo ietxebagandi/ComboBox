@@ -74,6 +74,7 @@ public class ComboBoxExperiments extends Application  {
                     String balioa = (String) observable.getValue();
                     if (balioa.equals("Txina")){
                         try {
+                            System.out.println("TXINAAAA");
                             imageView.setImage(lortuIrudia("txina.jpg"));
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -146,7 +147,11 @@ public class ComboBoxExperiments extends Application  {
 
     private Image lortuIrudia(String location) throws IOException {
 
-        InputStream is = getClass().getResourceAsStream("/" + location);
+
+        InputStream is = getClass().getClassLoader().getResourceAsStream("/" + location);
+
+        // is balioa NULL da. ZERGATIK?????
+
         BufferedImage reader = ImageIO.read(is);
         return SwingFXUtils.toFXImage(reader, null);
 
