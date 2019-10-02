@@ -74,7 +74,6 @@ public class ComboBoxExperiments extends Application  {
                     String balioa = (String) observable.getValue();
                     if (balioa.equals("Txina")){
                         try {
-                            System.out.println("TXINAAAA");
                             imageView.setImage(lortuIrudia("txina.jpg"));
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -82,33 +81,43 @@ public class ComboBoxExperiments extends Application  {
                     }
 
                     if (balioa.equals("Senegal")){
-                        InputStream is = getClass().getResourceAsStream("/" + "senegal.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
+                        try {
+                            imageView.setImage(lortuIrudia("senegal.jpg"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (balioa.equals("Paris")){
-                        InputStream is = getClass().getResourceAsStream("/" + "paris.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
+                        try {
+                            imageView.setImage(lortuIrudia("paris.jpg"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (balioa.equals("Txingak")){
-                        InputStream is = getClass().getResourceAsStream("/" + "txingak.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
+                        try {
+                            imageView.setImage(lortuIrudia("txingak.jpg"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (balioa.equals("Sokatira")){
-                        InputStream is = getClass().getResourceAsStream("/" + "sokatira.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
+                        try {
+                            imageView.setImage(lortuIrudia("sokatira.jpg"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (balioa.equals("Zaldi-probak")){
-                        InputStream is = getClass().getResourceAsStream("/" + "zaldiprobak.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
+                        try {
+                            imageView.setImage(lortuIrudia("zaldiprobak.jpg"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (balioa.equals("Saskibaloia")){
@@ -118,15 +127,19 @@ public class ComboBoxExperiments extends Application  {
                     }
 
                     if (balioa.equals("Tenisa")){
-                        InputStream is = getClass().getResourceAsStream("/" + "tenisa.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
+                        try {
+                            imageView.setImage(lortuIrudia("tenisa.jpg"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     if (balioa.equals("Golf")){
-                        InputStream is = getClass().getResourceAsStream("/" + "golf.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
+                        try {
+                            imageView.setImage(lortuIrudia("golf.jpg"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -147,11 +160,9 @@ public class ComboBoxExperiments extends Application  {
 
     private Image lortuIrudia(String location) throws IOException {
 
-
-        InputStream is = getClass().getClassLoader().getResourceAsStream("/" + location);
-
-        // is balioa NULL da. ZERGATIK?????
-
+        System.out.println(getClass());
+        System.out.println(location);
+        InputStream is = getClass().getResourceAsStream(location);
         BufferedImage reader = ImageIO.read(is);
         return SwingFXUtils.toFXImage(reader, null);
 
