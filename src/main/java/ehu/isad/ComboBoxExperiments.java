@@ -57,15 +57,16 @@ public class ComboBoxExperiments extends Application  {
 
         ListView listViewOfArgazki = new ListView<>(argazkiList);
 
-
+        ImageView imageView = new ImageView();
 
         listViewOfArgazki.getSelectionModel().selectedItemProperty().addListener(  (observable, oldValue, newValue) -> {
+
+
             if (observable.getValue() == null) return;
 
             String fitx = observable.getValue().getFitx();
 
             try {
-                ImageView imageView = new ImageView();
                 imageView.setImage(lortuIrudia(fitx /* 48x48 */));
             } catch (IOException e) {
                 e.printStackTrace();
