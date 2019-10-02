@@ -1,6 +1,8 @@
 package ehu.isad;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,128 +30,57 @@ public class ComboBoxExperiments extends Application  {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        ComboBox comboBox = new ComboBox();
+        ComboBox comboBilduma = new ComboBox();
+        List<String> bildumak = List.of("Bidaiak","Herri kirolak","Kirolak");
+        ObservableList<Bilduma> bildumaList = FXCollections.observableArrayList();
+        bildumak.forEach((elem)->{
+            bildumaList.add(new Bilduma(elem));
+        });
+        comboBilduma.setItems(bildumaList);
 
-        comboBox.getItems().add("Bidaiak");
-        comboBox.getItems().add("Herri kirolak");
-        comboBox.getItems().add("Kirolak");
+        Map<String,List<Argazkia>> bildumaMap = new HashMap<>();
+        bildumaMap.put("Bidaiak", List.of(new Argazkia("Txina","txina.jpg"),
+                new Argazkia("Paris","paris.jpg"), new Argazkia("Senegal","senegal.jpg")));
 
-        comboBox.setEditable(true);
-        comboBox.setEditable(false);
+        bildumaMap.put("Herri Kirolak", List.of(new Argazkia("Txingak","txingak.jpg"),
+                new Argazkia("Sokatira","sokatira.jpg"), new Argazkia("Zaldi-probak","zaldiprobak.jpg")));
 
-        ListView listView = new ListView();
+        bildumaMap.put("Kirolak", List.of(new Argazkia("Saskibaloia","saskibaloia.jpg"),
+                new Argazkia("Tenisa","tenis.jpg"), new Argazkia("Golf","golf.jpg")));
 
-        ImageView imageView = new ImageView();
+        ObservableList<Argazkia> argazkiList = FXCollections.observableArrayList();
+        argazkiList.addAll(bildumaMap.get("Bidaiak"));
+        argazkiList.addAll(bildumaMap.get("Herri Kirolak"));
+        argazkiList.addAll(bildumaMap.get("Kirolak"));
 
+        comboBilduma.setEditable(false);
 
-
-        comboBox.setOnAction(e -> {
-
-            listView.getItems().clear();
-
-            String bilduma = (String) comboBox.getValue();
-            if (bilduma=="Bidaiak") {
-                listView.getItems().add("Txina");
-                listView.getItems().add("Senegal");
-                listView.getItems().add("Paris");
-
-            }
-            if (bilduma=="Herri kirolak") {
-                listView.getItems().add("Txingak");
-                listView.getItems().add("Sokatira");
-                listView.getItems().add("Zaldi-probak");
+        ListView listViewOfArgazki = new ListView<>(argazkiList);
 
 
-            }
-            if (bilduma=="Kirolak") {
-                listView.getItems().add("Saskibaloia");
-                listView.getItems().add("Tenisa");
-                listView.getItems().add("Golf");
 
+        listViewOfArgazki.getSelectionModel().selectedItemProperty().addListener(  (observable, oldValue, newValue) -> {
+            if (observable.getValue() == null) return;
+
+            String fitx = observable.getValue().getFitx();
+
+            try {
+                ImageView imageView = new ImageView();
+                imageView.setImage(lortuIrudia(fitx /* 48x48 */));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
         });
 
-        listView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    String balioa = (String) observable.getValue();
-                    if (balioa.equals("Txina")){
-                        try {
-                            imageView.setImage(lortuIrudia("txina.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
 
-                    if (balioa.equals("Senegal")){
-                        try {
-                            imageView.setImage(lortuIrudia("senegal.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (balioa.equals("Paris")){
-                        try {
-                            imageView.setImage(lortuIrudia("paris.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (balioa.equals("Txingak")){
-                        try {
-                            imageView.setImage(lortuIrudia("txingak.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (balioa.equals("Sokatira")){
-                        try {
-                            imageView.setImage(lortuIrudia("sokatira.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (balioa.equals("Zaldi-probak")){
-                        try {
-                            imageView.setImage(lortuIrudia("zaldiprobak.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (balioa.equals("Saskibaloia")){
-                        InputStream is = getClass().getResourceAsStream("/" + "saskibaloia.jpg");
-                        Image image = new Image(is);
-                        imageView.setImage(image);
-                    }
-
-                    if (balioa.equals("Tenisa")){
-                        try {
-                            imageView.setImage(lortuIrudia("tenisa.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (balioa.equals("Golf")){
-                        try {
-                            imageView.setImage(lortuIrudia("golf.jpg"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
 
 
 
 
         imageView.setFitHeight(150);
         imageView.setFitWidth(150);
-        HBox hbox = new HBox(comboBox,listView,imageView);
+        HBox hbox = new HBox(comboBilduma,listViewOfArgazki,imageView);
         Scene scene = new Scene(hbox, 400, 200);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -162,7 +94,7 @@ public class ComboBoxExperiments extends Application  {
 
         System.out.println(getClass());
         System.out.println(location);
-        InputStream is = getClass().getResourceAsStream(location);
+        InputStream is = getClass().getResourceAsStream("/" + location);
         BufferedImage reader = ImageIO.read(is);
         return SwingFXUtils.toFXImage(reader, null);
 
