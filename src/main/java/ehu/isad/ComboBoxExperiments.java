@@ -49,9 +49,24 @@ public class ComboBoxExperiments extends Application  {
                 new Argazkia("Tenisa","tenis.jpg"), new Argazkia("Golf","golf.jpg")));
 
         ObservableList<Argazkia> argazkiList = FXCollections.observableArrayList();
-        argazkiList.addAll(bildumaMap.get("Bidaiak"));
-        argazkiList.addAll(bildumaMap.get("Herri Kirolak"));
-        argazkiList.addAll(bildumaMap.get("Kirolak"));
+        comboBilduma.setOnAction(e->{
+
+            argazkiList.clear();
+
+            if (comboBilduma.getValue().equals(bildumaList.get(0))){
+                argazkiList.addAll(bildumaMap.get("Bidaiak"));
+            }
+
+            if (comboBilduma.getValue().equals(bildumaList.get(1))){
+                argazkiList.addAll(bildumaMap.get("Herri Kirolak"));
+            }
+
+            if (comboBilduma.getValue().equals(bildumaList.get(2))){
+                argazkiList.addAll(bildumaMap.get("Kirolak"));
+            }
+        });
+
+
 
         comboBilduma.setEditable(false);
 
@@ -64,7 +79,7 @@ public class ComboBoxExperiments extends Application  {
 
             if (observable.getValue() == null) return;
 
-            String fitx = observable.getValue().getFitx();
+            String fitx = ((Argazkia)observable.getValue()).getFitx();
 
             try {
                 imageView.setImage(lortuIrudia(fitx /* 48x48 */));
