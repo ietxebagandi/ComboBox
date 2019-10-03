@@ -160,14 +160,13 @@ public class ComboBoxExperiments extends Application  {
 
     private Image lortuIrudia(String location) throws IOException {
 
-        System.out.println(getClass());
-        System.out.println(location);
-        InputStream is = getClass().getResourceAsStream(location);
+       // InputStream is = getClass().getResourceAsStream("C:\Users\ietxe\IdeaProjects\isadjavafx\src\main\resources\txina.jpg");
+        FileInputStream is = new FileInputStream("txina.jpg");
+
+
         BufferedImage reader = ImageIO.read(is);
         return SwingFXUtils.toFXImage(reader, null);
-
     }
-
 
     public static void main(String[] args) {
         Application.launch(args);
