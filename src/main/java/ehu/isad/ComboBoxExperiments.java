@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -14,10 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -82,7 +78,6 @@ public class ComboBoxExperiments extends Application  {
             String fitx = ((Argazkia)observable.getValue()).getFitx();
 
             try {
-                System.out.println(fitx);
                 imageView.setImage(lortuIrudia(fitx /* 48x48 */));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -109,7 +104,12 @@ public class ComboBoxExperiments extends Application  {
 
     private Image lortuIrudia(String location) throws IOException {
 
-        InputStream is = getClass().getClassLoader().getResourceAsStream("/"+location);
+//        FileInputStream input = new FileInputStream("/opt/isadjavafx/src/main/resources/" + location);
+//        Image image = new Image(input);
+//        return image;
+
+        System.out.println(location);
+        InputStream is = getClass().getResourceAsStream("/" + location);
         BufferedImage reader = ImageIO.read(is);
         return SwingFXUtils.toFXImage(reader, null);
 
