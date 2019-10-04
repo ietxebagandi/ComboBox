@@ -82,6 +82,7 @@ public class ComboBoxExperiments extends Application  {
             String fitx = ((Argazkia)observable.getValue()).getFitx();
 
             try {
+                System.out.println(fitx);
                 imageView.setImage(lortuIrudia(fitx /* 48x48 */));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -108,9 +109,7 @@ public class ComboBoxExperiments extends Application  {
 
     private Image lortuIrudia(String location) throws IOException {
 
-        System.out.println(getClass());
-        System.out.println(location);
-        InputStream is = getClass().getResourceAsStream("/" + location);
+        InputStream is = getClass().getClassLoader().getResourceAsStream("/"+location);
         BufferedImage reader = ImageIO.read(is);
         return SwingFXUtils.toFXImage(reader, null);
 
